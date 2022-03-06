@@ -178,25 +178,25 @@ class TestPynterpol(unittest.TestCase):
     ])
     def test_interp_bilinear_u8_error_different_size(self, x, y):
         self.assertRaises(
-            TypeError,
+            ValueError,
             lambda: interp_bilinear_u8(self.small_gray, x, y)
         )
 
     def test_interp_bilinear_u8_error_default_wrong_size_01(self):
         self.assertRaises(
-            TypeError,
+            ValueError,
             lambda: interp_bilinear_u8(self.small_color, [1, 2], [3, 4], np.array([1, 2]))
         )
 
     def test_interp_bilinear_u8_error_default_wrong_size_02(self):
         self.assertRaises(
-            TypeError,
+            ValueError,
             lambda: interp_bilinear_u8(self.small_color, [1, 2], [3, 4], np.array([1, 2, 3, 4]))
         )
 
     def test_interp_bilinear_u8_error_default_two_many_dimensions(self):
         self.assertRaises(
-            TypeError,
+            ValueError,
             lambda: interp_bilinear_u8(np.ones([2, 3, 4, 5], dtype=np.uint8), [1, 2], [3, 4])
         )
 
