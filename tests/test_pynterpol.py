@@ -202,7 +202,7 @@ class TestPynterpol(unittest.TestCase):
 
     def test_interp_bilinear_u8_error_default_not_enough_dimensions(self):
         self.assertRaises(
-            TypeError,
+            ValueError,
             lambda: interp_bilinear_u8(np.arange(10, dtype=np.uint8), [1, 2], [3, 4])
         )
 
