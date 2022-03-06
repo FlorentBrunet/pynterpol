@@ -11,7 +11,7 @@ python -m pip install pynterpol
 ## Usage
 
 ```python
-from pynterpol import interp_bilinear_u8
+from src.pynterpol import interp_bilinear_u8
 import cv2
 
 img = cv2.imread('image.jpg')
