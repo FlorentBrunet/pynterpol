@@ -3,9 +3,10 @@ import numpy as np
 from scipy import interpolate
 from parameterized import parameterized
 
-from pynterpol import interp_bilinear_u8
+from pynterpol import interp_bilinear_u8, interp_bicubic_u8
 
 
+# noinspection DuplicatedCode
 class TestPynterpol(unittest.TestCase):
 
     @classmethod
@@ -205,6 +206,17 @@ class TestPynterpol(unittest.TestCase):
             ValueError,
             lambda: interp_bilinear_u8(np.arange(10, dtype=np.uint8), [1, 2], [3, 4])
         )
+
+    def test_interp_bicubic_u8_all_int_gray(self):
+        h = self.small_gray.shape[0]
+        w = self.small_gray.shape[1]
+
+        x, y = np.meshgrid(np.arange(w), np.arange(h))
+
+        val = interp_bicubic_u8(self.small_gray, x, y)
+
+        self.assertEqual((h, w), val.shape)
+        self.assertTrue(np.all(self.small_gray == val))
 
 
 if __name__ == '__main__':

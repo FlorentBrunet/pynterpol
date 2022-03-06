@@ -536,39 +536,37 @@ def interp_bicubic_gray_u8_native(img, x, y, default_value):
         cx -= rx
         cx2 = cx * cx
         cx3 = cx * cx2
-        rx -= 1
 
         cy = y[i]
         ry = int(math.floor(cy))
         cy -= ry
         cy2 = cy * cy
         cy3 = cy * cy2
-        ry -= 1
 
         if (rx >= 1) and (rx < width - 2) and (ry >= 1) and (ry < height - 2):
             # This is the general cases (i.e. the 'middle' of the image)
             # The other cases are deported in the function 'inter_bicubic_other_cases_gray_u8'
             # (it makes the inner code of the loop smaller and consequently
             # reduces the number of 'instruction cache misses')
-            v00 = img[ry, rx]
-            v10 = img[ry, rx + 1]
-            v20 = img[ry, rx + 2]
-            v30 = img[ry, rx + 3]
+            v00 = img[ry - 1, rx - 1]
+            v10 = img[ry - 1, rx]
+            v20 = img[ry - 1, rx + 1]
+            v30 = img[ry - 1, rx + 2]
 
-            v01 = img[ry + 1, rx]
-            v11 = img[ry + 1, rx + 1]
-            v21 = img[ry + 1, rx + 2]
-            v31 = img[ry + 1, rx + 3]
+            v01 = img[ry, rx - 1]
+            v11 = img[ry, rx]
+            v21 = img[ry, rx + 1]
+            v31 = img[ry, rx + 2]
 
-            v02 = img[ry + 2, rx]
-            v12 = img[ry + 2, rx + 1]
-            v22 = img[ry + 2, rx + 2]
-            v32 = img[ry + 2, rx + 3]
+            v02 = img[ry + 1, rx - 1]
+            v12 = img[ry + 1, rx]
+            v22 = img[ry + 1, rx + 1]
+            v32 = img[ry + 1, rx + 2]
 
-            v03 = img[ry + 3, rx]
-            v13 = img[ry + 3, rx + 1]
-            v23 = img[ry + 3, rx + 2]
-            v33 = img[ry + 3, rx + 3]
+            v03 = img[ry + 2, rx - 1]
+            v13 = img[ry + 2, rx]
+            v23 = img[ry + 2, rx + 1]
+            v33 = img[ry + 2, rx + 2]
 
             p0 = 2. * cy2 - cy3 - cy
             p1 = 3. * cy3 - 5. * cy2 + 2
