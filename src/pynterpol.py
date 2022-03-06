@@ -30,15 +30,21 @@ def interp_bilinear_u8(image, x, y, default_value=0.):
             if default.size != 1:
                 raise TypeError(f'The default value must have one value but is has {default.size}')
 
-            xx = x if x.ndim == 1 else x.reshape(-1)
-            yy = y if y.ndim == 1 else y.reshape(-1)
+            xx = x if type(x) == np.ndarray else np.array(x)
+            yy = y if type(y) == np.ndarray else np.array(y)
 
-            xxx = xx if xx.dtype == np.float64 else xx.astype(np.float64)
-            yyy = yy if yy.dtype == np.float64 else yy.astype(np.float64)
+            if xx.size != yy.size:
+                raise TypeError(f'x and y must have the same size but received size(x)={xx.size} and size(y)={yy.size}')
 
-            val = interp_gray_u8_native(image, xxx, yyy, default[0])
+            xxx = xx if xx.ndim == 1 else xx.reshape(-1)
+            yyy = yy if yy.ndim == 1 else yy.reshape(-1)
 
-            return val.reshape(x.shape)
+            xxxx = xxx if xxx.dtype == np.float64 else xxx.astype(np.float64)
+            yyyy = yyy if yyy.dtype == np.float64 else yyy.astype(np.float64)
+
+            val = interp_gray_u8_native(image, xxxx, yyyy, default[0])
+
+            return val.reshape(xx.shape)
         elif image.ndim == 3:
             n_channels = image.shape[2]
 
